@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write      # Added for Pages compatibility
+  id-token: write   # Added for modern auth
 
 jobs:
   deploy:
@@ -27,11 +29,9 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Copy CNAME for custom domain
-        run: cp CNAME dist/CNAME
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          cname: micahbron.com  # This replaces your 'cp CNAME' step
