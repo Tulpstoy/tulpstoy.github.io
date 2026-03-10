@@ -56,7 +56,7 @@
 .mobile-carousel__image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Show full image without cropping (e.g. Get Started button) */
   border-radius: 12px;
 }
 
@@ -225,16 +225,46 @@
 }
 
 /* === Mobile Responsive Styles === */
+/* Size cards in vw so center + prev + next fit in viewport without being cut off */
 @media (max-width: 768px) {
+  .mobile-carousel-wrapper {
+    min-height: 62lvh; /* overall carousel height on mobile */
+    margin-top: 0.5rem;   /* tighter gap above carousel (was 2rem) */
+    margin-bottom: 1.5rem;
+  }
+
+  .mobile-carousel {
+    min-height: 62lvh;
+  }
+
   .mobile-carousel__list {
-    height: 1200px !important; /* Much taller for mobile displays */
-    min-height: 1200px !important; /* Ensure minimum height */
+    height: 62lvh !important;      /* about 60–65% of viewport height */
+    min-height: 62lvh !important;
   }
 
   .mobile-carousel__item {
-    width: 220px;
-    height: 489px; /* Maintain 1080x2400 aspect ratio */
-    min-height: 489px; /* Ensure minimum height */
+    width: 36vw;
+    min-width: 36vw;
+    height: 80vw; /* 36 * (533/240) ≈ 80vw for 240:533 aspect */
+    min-height: 80vw;
+    max-height: 85vh;
+  }
+
+  /* Tighter offsets on mobile so all three cards stay visible */
+  .mobile-carousel__item[data-pos="-1"] {
+    transform: translateX(-28%) scale(0.9);
+  }
+
+  .mobile-carousel__item[data-pos="1"] {
+    transform: translateX(28%) scale(0.9);
+  }
+
+  .mobile-carousel__item[data-pos="-2"] {
+    transform: translateX(-52%) scale(0.8);
+  }
+
+  .mobile-carousel__item[data-pos="2"] {
+    transform: translateX(52%) scale(0.8);
   }
 
   .mobile-card-description-outer {
@@ -257,15 +287,44 @@
 }
 
 @media (max-width: 480px) {
+  .mobile-carousel-wrapper {
+    min-height: 62lvh;
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .mobile-carousel {
+    min-height: 62lvh;
+  }
+
   .mobile-carousel__list {
-    height: 1000px !important; /* Much taller for mobile displays */
-    min-height: 1000px !important; /* Ensure minimum height */
+    height: 62lvh !important;
+    min-height: 62lvh !important;
   }
 
   .mobile-carousel__item {
-    width: 180px;
-    height: 400px; /* Maintain 1080x2400 aspect ratio */
-    min-height: 400px; /* Ensure minimum height */
+    width: 38vw;
+    min-width: 38vw;
+    height: 84vw;       /* keeps image aspect ratio (matches source) */
+    min-height: 84vw;
+    max-height: 62lvh;
+  }
+
+  /* Slightly tighter on very small screens */
+  .mobile-carousel__item[data-pos="-1"] {
+    transform: translateX(-26%) scale(0.9);
+  }
+
+  .mobile-carousel__item[data-pos="1"] {
+    transform: translateX(26%) scale(0.9);
+  }
+
+  .mobile-carousel__item[data-pos="-2"] {
+    transform: translateX(-50%) scale(0.8);
+  }
+
+  .mobile-carousel__item[data-pos="2"] {
+    transform: translateX(50%) scale(0.8);
   }
 
   .mobile-card-description-outer {

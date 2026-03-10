@@ -8,7 +8,14 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        assetFileNames: () => 'assets/[name]-[hash][extname]'
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.')
+          const ext = info[info.length - 1]
+          if (/\.(css)$/.test(assetInfo.name)) {
+            return `assets/[name]-[hash][extname]`
+          }
+          return `assets/[name]-[hash][extname]`
+        }
       }
     },
     cssCodeSplit: true,
